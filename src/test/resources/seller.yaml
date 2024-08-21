@@ -1,0 +1,38 @@
+contact:
+  !Contact
+  name: Willi Wunder
+  street: Dresdner Str. 36
+  ZIP: 67663
+  location: Kaiserslautern
+  country: DE
+  eMail: willi@example.com
+  fax: +49-6102-555723510
+  phone: +49-6102-555723511
+ID: ww
+globalID:
+  !SchemeId
+  scheme: 1
+  id: x
+legalOrganisation:
+  !SchemeId
+  scheme: 2
+  id: y
+#uriUniversalCommunication: # mutually exclusive with email
+#  !SchemeId
+#  scheme: 3
+#  id: z
+name: Wunder Ltd.
+eMail: wunder@example.com
+street: Bahnhofstr. 18
+additionalAddress: Hinterhaus
+additionalAddressExtension: bei Milzer klingeln
+country: DE
+ZIP: 63263
+location: Neu-Isenburg
+taxID: 123-123-0
+VATID: DE1231230
+banks:
+  - !BankDetails
+    IBAN: DE00200400600815471112
+    BIC: COBADEFFXXX
+    accountName: Wunder GmbH
