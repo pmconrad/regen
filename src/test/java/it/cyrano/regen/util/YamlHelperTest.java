@@ -17,9 +17,9 @@
  */
 package it.cyrano.regen.util;
 
+import it.cyrano.regen.data.Product;
 import it.cyrano.regen.data.TradeParty;
 import org.junit.jupiter.api.Test;
-import org.mustangproject.Product;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -111,13 +111,14 @@ public class YamlHelperTest {
         for (var _e : _map.entrySet()) {
             var e = (Map.Entry) _e;
             assertInstanceOf(String.class, e.getKey());
-            assertInstanceOf(it.cyrano.regen.data.Product.class, e.getValue());
-            map.put((String) e.getKey(), ((it.cyrano.regen.data.Product) e.getValue()).get());
+            assertInstanceOf(Product.class, e.getValue());
+            map.put((String) e.getKey(), ((Product) e.getValue()));
         }
         assertEquals(3, map.size());
 
-        var prod = map.get("0815");
-        assertNotNull(prod);
+        var _prod = map.get("0815");
+        assertNotNull(_prod);
+        var prod = _prod.get();
         assertEquals("buyer-1", prod.getBuyerAssignedID());
         assertEquals("Softwareentwicklung", prod.getName());
         assertEquals("HUR", prod.getUnit());
@@ -129,8 +130,12 @@ public class YamlHelperTest {
         assertEquals("Reverse Charge", prod.getTaxExemptionReason());
         assertTrue(prod.isReverseCharge());
         assertFalse(prod.isIntraCommunitySupply());
+        assertEquals(new BigDecimal("11.25"), _prod.getNetPricePerUnit());
+        assertNull(_prod.getGrossPricePerUnit());
 
-        prod = map.get("0816");
+        _prod = map.get("0816");
+        assertNotNull(_prod);
+        prod = _prod.get();
         assertEquals("Delikatess-Fleischwurst", prod.getDescription());
         assertEquals("buyer-2", prod.getBuyerAssignedID());
         assertEquals("Fleischwurst", prod.getName());
@@ -142,9 +147,12 @@ public class YamlHelperTest {
         assertEquals("S", prod.getTaxCategoryCode());
         assertFalse(prod.isReverseCharge());
         assertFalse(prod.isIntraCommunitySupply());
-        assertNotNull(prod);
+        assertNull(_prod.getNetPricePerUnit());
+        assertEquals(new BigDecimal("12.25"), _prod.getGrossPricePerUnit());
 
-        prod = map.get("0817");
+        _prod = map.get("0817");
+        assertNotNull(_prod);
+        prod = _prod.get();
         assertEquals("Orangensaft, frisch gepresst", prod.getDescription());
         assertNull(prod.getBuyerAssignedID());
         assertEquals("O-Saft", prod.getName());
@@ -156,6 +164,7 @@ public class YamlHelperTest {
         assertEquals("S", prod.getTaxCategoryCode());
         assertFalse(prod.isReverseCharge());
         assertFalse(prod.isIntraCommunitySupply());
-        assertNotNull(prod);
+        assertNull(_prod.getNetPricePerUnit());
+        assertNull(_prod.getGrossPricePerUnit());
     }
 }

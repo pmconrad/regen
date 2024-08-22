@@ -18,13 +18,13 @@
 package it.cyrano.regen.command;
 
 import it.cyrano.regen.MyVersionProvider;
+import it.cyrano.regen.data.Product;
 import it.cyrano.regen.data.TradeParty;
 import it.cyrano.regen.util.YamlHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.mustangproject.FileAttachment;
 import org.mustangproject.Invoice;
 import org.mustangproject.Item;
-import org.mustangproject.Product;
 import org.mustangproject.ZUGFeRD.*;
 import picocli.CommandLine;
 
@@ -74,7 +74,7 @@ public class NewInvoice implements Callable<Integer> {
         @CommandLine.Option(names = { "-ip", "--product" }, description = "Item's product ID in database", required = true)
         String product;
 
-        @CommandLine.ArgGroup(multiplicity = "1")
+        @CommandLine.ArgGroup
         ItemPrice price;
 
         @CommandLine.Option(names = { "-iq", "--quantity" }, description = "Item's quantity", required = true)
@@ -155,8 +155,8 @@ public class NewInvoice implements Callable<Integer> {
         Map<String, Product> entries = new HashMap<>();
         YamlHelper.read(productsFile, HashMap.class)
                   .forEach((k,v) -> {
-                      if (v instanceof it.cyrano.regen.data.Product p && k instanceof String s) {
-                          entries.put(s, p.get());
+                      if (v instanceof Product p && k instanceof String s) {
+                          entries.put(s, p);
                       } else {
                           log.warn("Ignoring wrong type for product {}", k);
                       }
@@ -189,11 +189,15 @@ public class NewInvoice implements Callable<Integer> {
                 throw new IllegalArgumentException("Unknown product ID in item: " + item.product);
             }
             var _item = new Item();
-            _item.setProduct(product);
-            if (item.price.net != null) {
+            _item.setProduct(product.get());
+            if (item.price != null && item.price.net != null) {
                 _item.setPrice(item.price.net);
-            } else {
-                _item.setGrossPrice(item.price.net);
+            } else if (item.price != null && item.price.gross != null) {
+                _item.setGrossPrice(item.price.gross);
+            } else if (product.getNetPricePerUnit() != null) {
+                _item.setPrice(product.getNetPricePerUnit());
+            } else if (product.getGrossPricePerUnit() != null) {
+                _item.setGrossPrice(product.getGrossPricePerUnit());
             }
             _item.setQuantity(item.quantity);
             invoice.addItem(_item);

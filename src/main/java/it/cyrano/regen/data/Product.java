@@ -35,6 +35,9 @@ public class Product {
     private boolean reverseCharge;
     private boolean intraCommunitySupply;
 
+    private BigDecimal netPricePerUnit;
+    private BigDecimal grossPricePerUnit;
+
     public org.mustangproject.Product get() {
         var prod = new org.mustangproject.Product();
         prod.setName(name);

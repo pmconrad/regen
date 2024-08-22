@@ -11,6 +11,7 @@
   sellerAssignedID: 0815
   reverseCharge: true
   intraCommunitySupply: false
+  netPricePerUnit: 11.25
 0816:
   !Product
   description: Delikatess-Fleischwurst
@@ -19,6 +20,7 @@
   unit: GIP # see EN16931 code lists values, tab "Unit"
   sellerAssignedID: 0816
   VATPercent: 19
+  grossPricePerUnit: 12.25
 0817:
   !Product
   description: Orangensaft, frisch gepresst
