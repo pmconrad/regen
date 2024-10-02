@@ -1,0 +1,29 @@
+0815:
+  !Product
+  description: Softwareentwicklung entspr. Anlage
+  buyerAssignedID: buyer-1
+  name: Softwareentwicklung
+  unit: HUR # see EN16931 code lists values, tab "Unit"
+  globalID:
+    !SchemeId
+    scheme: 1 # see EN16931 code lists values, tab "Item"?
+    id: x
+  sellerAssignedID: 0815
+  reverseCharge: true
+  intraCommunitySupply: false
+  netPricePerUnit: 11.25
+0816:
+  !Product
+  description: Delikatess-Fleischwurst
+  buyerAssignedID: buyer-2
+  name: Fleischwurst
+  unit: GIP # see EN16931 code lists values, tab "Unit"
+  sellerAssignedID: 0816
+  VATPercent: 19
+  grossPricePerUnit: 12.25
+0817:
+  !Product
+  description: Orangensaft, frisch gepresst
+  name: O-Saft
+  unit: LTR # see EN16931 code lists values, tab "Unit"
+  VATPercent: 7

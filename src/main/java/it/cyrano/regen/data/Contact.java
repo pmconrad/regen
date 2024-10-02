@@ -15,19 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.cyrano.regen;
+package it.cyrano.regen.data;
 
-import it.cyrano.regen.command.NewInvoice;
-import picocli.CommandLine;
+import lombok.Getter;
+import lombok.Setter;
 
-@CommandLine.Command(name = "regen",
-                     description = "CLI tool for generating machine- and human-readable documents conforming to the ZugFERD standard",
-                     mixinStandardHelpOptions = true, versionProvider = MyVersionProvider.class,
-                     subcommands = {
-                         NewInvoice.class
-                     })
-public class Main {
-    public static void main(String[] commandlineParameters) {
-        System.exit(new CommandLine(new Main()).execute(commandlineParameters));
+@Getter
+@Setter
+public class Contact {
+    private String name;
+    private String street;
+    private String country;
+    private String ZIP;
+    private String location;
+    private String eMail;
+    private String phone;
+    private String fax;
+
+    public org.mustangproject.Contact get() {
+        var contact = new org.mustangproject.Contact();
+        contact.setName(name);
+        contact.setStreet(street);
+        contact.setCountry(country);
+        contact.setZIP(ZIP);
+        contact.setLocation(location);
+        contact.setEMail(eMail);
+        contact.setPhone(phone);
+        contact.setFax(fax);
+        return contact;
     }
 }
