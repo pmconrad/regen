@@ -117,7 +117,7 @@ public class NewInvoice implements Callable<Integer> {
     Due dueDate;
 
     @CommandLine.Option(names = { "-dd", "--delivery-date" }, required = true,
-                        description = "Delivery date, can be 'YYYY-MM-DD', 'YYYY-MM', 'YYYY' or a period with start and end dates 'YYYY-MM-DD...YYYY-MM-DD'")
+                        description = "Delivery date, can be 'YYYY-MM-DD', 'YYYY-MM', 'YYYY' or a period with start and end dates 'YYYY-MM[-DD]...YYYY-MM[-DD]'")
     String delivered;
 
     @CommandLine.Option(names = { "-s", "--sender" }, required = true,
@@ -233,6 +233,13 @@ public class NewInvoice implements Callable<Integer> {
                 start.setTime(YMD.parse(delivered + "-01"));
                 end = new GregorianCalendar();
                 end.setTime(start.getTime());
+                end.add(Calendar.MONTH, 1);
+                break;
+            case 17:
+                start = new GregorianCalendar();
+                start.setTime(YMD.parse(delivered.substring(0, 7) + "-01"));
+                end = new GregorianCalendar();
+                end.setTime(YMD.parse(delivered.substring(10) + "-01"));
                 end.add(Calendar.MONTH, 1);
                 break;
             case 23:
